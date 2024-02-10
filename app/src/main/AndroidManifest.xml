@@ -15,6 +15,9 @@
         android:theme="@style/Theme.TinkoffFilm"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.detaildisplay.DetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.maindisplay.MainActivity"
             android:exported="true">
             <intent-filter>

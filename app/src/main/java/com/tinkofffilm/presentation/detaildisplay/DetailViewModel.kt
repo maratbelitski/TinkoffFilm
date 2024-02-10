@@ -1,12 +1,12 @@
-package com.tinkofffilm.presentation.maindisplay
+package com.tinkofffilm.presentation.detaildisplay
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tinkofffilm.data.MoviesRepositoryImpl
-import com.tinkofffilm.data.pojo.ResponseServer
-import com.tinkofffilm.domain.LoadAllMoviesUseCase
+import com.tinkofffilm.data.pojo.MovieDetail
+import com.tinkofffilm.domain.LoadDetailMoviesUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -16,21 +16,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * @date  10.02.2024
  * @project TinkoffFilm
  */
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class DetailViewModel (application: Application) : AndroidViewModel(application){
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     private val repository = MoviesRepositoryImpl(application)
 
-    private val loadAllMoviesFromApi = LoadAllMoviesUseCase(repository)
+    private val loadDetailMoviesFromApi = LoadDetailMoviesUseCase(repository)
 
-    private var currentPage = 1;
 
-    companion object {
-
-    }
-
-    private val allMovies = MutableLiveData<ResponseServer?>()
-    val allMoviesLD: LiveData<ResponseServer?>
-        get() = allMovies
+    private val detailMovies = MutableLiveData<MovieDetail>()
+    val detailMoviesLD: LiveData<MovieDetail>
+    get() = detailMovies
 
     private val progressBar = MutableLiveData(true)
     val progressBarLD: LiveData<Boolean>
@@ -40,48 +35,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val noConnectLD: LiveData<Boolean>
         get() = noConnect
 
-    private val isLoad = MutableLiveData(false)
-    val isLoadLD: LiveData<Boolean>
-        get() = isLoad
-
-    init {
-        loadMovies()
-
-    }
-
-
-
-    fun loadMovies() {
-        val disposable = loadAllMoviesFromApi.loadAllMovies(currentPage)
+    fun loadDetailMovie(idKinopoisk:Int) {
+        val disposable = loadDetailMoviesFromApi.loadAllMovies(idKinopoisk)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.doOnSubscribe {
                 progressBar
-                isLoad.value = false
             }
             ?.doAfterTerminate {
                 progressBar.value = false
-                isLoad.value = true
-
             }
             ?.subscribe({
                 noConnect.value = false
-                allMovies.value = it
-
-
-//                //подгрузка данных
-//                var loadedMovies:ResponseServer?  = allMovies.value
-//                if (loadedMovies != null) {
-//                    loadedMovies = it
-//                   allMovies.value = loadedMovies
-//                } else {
-//                    allMovies.value = it
-//                }
-//                currentPage++
+                detailMovies.value = it
 
             }, {
                 noConnect.value = true
-                loadMovies()
+                loadDetailMovie(idKinopoisk)
             })
 
         if (disposable != null) {

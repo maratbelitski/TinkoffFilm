@@ -9,4 +9,8 @@ import com.google.gson.annotations.SerializedName
  */
 data class Countries (
     @SerializedName("country") var country : String
-)
+) {
+    override fun toString(): String {
+        return "Страна: $country"
+    }
+}

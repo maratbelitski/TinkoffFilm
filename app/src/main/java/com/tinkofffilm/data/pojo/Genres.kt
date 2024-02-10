@@ -13,6 +13,6 @@ data class Genres (
 
 ) {
     override fun toString(): String {
-        return genre
+        return "Жанр: $genre"
     }
 }

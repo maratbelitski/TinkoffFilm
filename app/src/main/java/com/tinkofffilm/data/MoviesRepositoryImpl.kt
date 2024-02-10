@@ -3,6 +3,7 @@ package com.tinkofffilm.data
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.tinkofffilm.data.pojo.Movie
+import com.tinkofffilm.data.pojo.MovieDetail
 import com.tinkofffilm.data.pojo.ResponseServer
 import com.tinkofffilm.data.retrofit.ApiFactory
 import com.tinkofffilm.data.retrofit.ApiService
@@ -15,7 +16,11 @@ import io.reactivex.rxjava3.core.Single
  * @project TinkoffFilm
  */
 class MoviesRepositoryImpl(application: Application) : MoviesRepository,ApiService {
-    override fun loadMovies(): Single<ResponseServer>? {
-        return ApiFactory.apiService.loadMovies()
+    override fun loadMovies(numberPage:Int): Single<ResponseServer>? {
+        return ApiFactory.apiService.loadMovies(numberPage)
+    }
+
+    override fun loadDetailMovies(idKinopoisk: Int): Single<MovieDetail>? {
+        return ApiFactory.apiService.loadDetailMovies(idKinopoisk)
     }
 }

@@ -1,16 +1,26 @@
 package com.tinkofffilm.presentation.maindisplay
 
+import android.app.Activity
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
+import com.tinkofffilm.R
 import com.tinkofffilm.databinding.ActivityMainBinding
+import com.tinkofffilm.presentation.detaildisplay.DetailActivity
+import com.tinkofffilm.presentation.fragment.MovieDetailFragment
 import com.tinkofffilm.presentation.maindisplay.adapters.MovieAdapter
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
     private val myViewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private lateinit var myAdapter: MovieAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -19,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         initViews()
         showObservers()
         doListeners()
-
     }
 
     private fun initViews() {
@@ -29,8 +38,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showObservers() {
         myViewModel.allMoviesLD.observe(this) {
-            myAdapter.submitList(it.items)
+            myAdapter.submitList(it?.items)
         }
+
 
         myViewModel.progressBarLD.observe(this) {
             if (it == false) {
@@ -39,6 +49,7 @@ class MainActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.VISIBLE
             }
         }
+
 
         myViewModel.noConnectLD.observe(this) {
             if (it == true) {
@@ -49,9 +60,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-   private fun doListeners(){
+
+    private fun doListeners() {
         binding.included.btnReload.setOnClickListener {
             myViewModel.loadMovies()
         }
+
+
+        myAdapter.onMovieItemClick = {
+
+            when(resources.configuration.orientation){
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    val fragment = MovieDetailFragment.newInstance(it.kinopoiskId)
+                    launchFragment(fragment)
+                }
+
+                Configuration.ORIENTATION_PORTRAIT -> {
+                    val intent = DetailActivity.launchIntent(this@MainActivity, it.kinopoiskId)
+               startActivity(intent)
+                }
+            }
+        }
+    }
+
+    private fun launchFragment(fragment: MovieDetailFragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.containerFragmentDetail, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
