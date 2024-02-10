@@ -37,4 +37,6 @@ data class Movie (
 
     @SerializedName("posterUrl")
     var posterUrl : String,
+
+    var isFavorite:Int = 0
 )

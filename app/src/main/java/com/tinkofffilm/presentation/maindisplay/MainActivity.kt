@@ -1,15 +1,10 @@
 package com.tinkofffilm.presentation.maindisplay
 
-import android.app.Activity
-import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import com.tinkofffilm.R
 import com.tinkofffilm.databinding.ActivityMainBinding
 import com.tinkofffilm.presentation.detaildisplay.DetailActivity
