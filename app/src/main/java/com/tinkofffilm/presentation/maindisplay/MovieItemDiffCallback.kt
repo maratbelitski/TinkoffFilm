@@ -1,7 +1,7 @@
-package com.tinkofffilm.presentation
+package com.tinkofffilm.presentation.maindisplay
 
 import androidx.recyclerview.widget.DiffUtil
-import com.tinkofffilm.data.Movie
+import com.tinkofffilm.data.pojo.Movie
 
 /**
  * @author Belitski Marat

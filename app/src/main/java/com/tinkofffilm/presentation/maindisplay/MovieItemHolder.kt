@@ -1,4 +1,4 @@
-package com.tinkofffilm.presentation
+package com.tinkofffilm.presentation.maindisplay
 
 import android.view.View
 import android.widget.ImageView
@@ -16,4 +16,5 @@ class MovieItemHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
     val ratingMovie: TextView = itemView.findViewById(R.id.rating_movie)
     val nameMovie: TextView = itemView.findViewById(R.id.tvName_movie)
     val dateMovie: TextView = itemView.findViewById(R.id.tvDate_movie)
+    val genreMovie: TextView = itemView.findViewById(R.id.tvGenre)
 }

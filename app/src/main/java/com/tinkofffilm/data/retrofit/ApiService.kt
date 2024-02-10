@@ -1,9 +1,9 @@
-package com.tinkofffilm.data
+package com.tinkofffilm.data.retrofit
 
+import com.tinkofffilm.data.pojo.ResponseServer
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Headers
-import retrofit2.http.Query
 
 /**
  * @author Belitski Marat
@@ -12,6 +12,6 @@ import retrofit2.http.Query
  */
 interface ApiService {
     @Headers("X-API-KEY: e30ffed0-76ab-4dd6-b41f-4c9da2b2735b")
-    @GET("films?order=RATING&type=ALL&ratingFrom=5&ratingTo=10&yearFrom=1000&yearTo=3000&page=1")
+    @GET("films/collections?type=TOP_POPULAR_MOVIES&page=1")
     fun loadMovies(): Single<ResponseServer>?
 }

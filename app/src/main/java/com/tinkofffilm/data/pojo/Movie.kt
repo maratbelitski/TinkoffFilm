@@ -1,7 +1,9 @@
-package com.tinkofffilm.data
+package com.tinkofffilm.data.pojo
 
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.tinkofffilm.data.pojo.Countries
+import com.tinkofffilm.data.pojo.Genres
 
 /**
  * @author Belitski Marat
@@ -31,7 +33,7 @@ data class Movie (
     var ratingKinopoisk : String,
 
     @SerializedName("year")
-    var year : Int,
+    var year : String,
 
     @SerializedName("posterUrl")
     var posterUrl : String,

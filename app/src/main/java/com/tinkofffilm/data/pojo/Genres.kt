@@ -1,4 +1,4 @@
-package com.tinkofffilm.data
+package com.tinkofffilm.data.pojo
 
 import com.google.gson.annotations.SerializedName
 
@@ -11,4 +11,8 @@ data class Genres (
 
     @SerializedName("genre") var genre : String
 
-)
+) {
+    override fun toString(): String {
+        return genre
+    }
+}

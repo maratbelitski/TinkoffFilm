@@ -1,4 +1,4 @@
-package com.tinkofffilm.data
+package com.tinkofffilm.data.pojo
 
 import com.google.gson.annotations.SerializedName
 
@@ -7,6 +7,6 @@ import com.google.gson.annotations.SerializedName
  * @date  09.02.2024
  * @project TinkoffFilm
  */
-class ResponseServer (
-    @SerializedName("items") var items : List<Movie>
+data class Countries (
+    @SerializedName("country") var country : String
 )

@@ -1,13 +1,14 @@
-package com.tinkofffilm.presentation.adapters
+package com.tinkofffilm.presentation.maindisplay.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.tinkofffilm.R
-import com.tinkofffilm.data.Movie
-import com.tinkofffilm.presentation.MovieItemDiffCallback
-import com.tinkofffilm.presentation.MovieItemHolder
+import com.tinkofffilm.data.pojo.Movie
+import com.tinkofffilm.presentation.maindisplay.MovieItemDiffCallback
+import com.tinkofffilm.presentation.maindisplay.MovieItemHolder
 
 /**
  * @author Belitski Marat
@@ -19,12 +20,6 @@ class MovieAdapter : ListAdapter<Movie, MovieItemHolder>(MovieItemDiffCallback()
         private const val FAVORITE = 1
         private const val NO_FAVORITE = 0
     }
-
-//    var shopItemList = mutableListOf<ShoppingItem>()
-//        set(value) {
-//            field = value
-//            notifyDataSetChanged()
-//        }
 
 //    var onShopItemLongClick:((ShoppingItem)->Unit)? = null //Пример с лямбдой
 //    //var onShopItemClick:OnShopItemLongClickListener? = null
@@ -41,16 +36,26 @@ class MovieAdapter : ListAdapter<Movie, MovieItemHolder>(MovieItemDiffCallback()
         return MovieItemHolder(view)
     }
 
-//    override fun getItemCount(): Int {
-//        return shopItemList.size
-//    }
-
     override fun onBindViewHolder(holder: MovieItemHolder, position: Int) {
+if (getItem(position).ratingKinopoisk!=null){
+    val rating = getItem(position).ratingKinopoisk.toDouble()
+   holder.ratingMovie.text = getItem(position).ratingKinopoisk
+    if(rating >= 8) {
+        holder.ratingMovie.setBackgroundResource(R.drawable.cercle_green)
+    } else if (rating >= 6){
+        holder.ratingMovie.setBackgroundResource(R.drawable.cercle_yellow)
+    } else {
+        holder.ratingMovie.setBackgroundResource(R.drawable.cercle_red)
+    }
+} else{
+    holder.ratingMovie.text = "0.0"
+    holder.ratingMovie.setBackgroundResource(R.drawable.cercle_white)
+}
 
-        //  holder.posterMovie.setImageResource(getItem(position))
-        holder.ratingMovie.text = getItem(position).ratingKinopoisk
+
         holder.nameMovie.text = getItem(position).nameRu
-        holder.dateMovie.text = getItem(position).year.toString()
+        holder.dateMovie.text = getItem(position).year
+        holder.genreMovie.text = getItem(position).genres[0].toString()
 
         val movie = getItem(position)
         Glide.with(holder.itemView)
