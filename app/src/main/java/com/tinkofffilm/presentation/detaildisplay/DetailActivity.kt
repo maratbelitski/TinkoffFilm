@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.tinkofffilm.R
 import com.tinkofffilm.databinding.ActivityDetailBinding
-import com.tinkofffilm.presentation.fragment.MovieDetailFragment
 
 class DetailActivity : AppCompatActivity() {
 

@@ -8,11 +8,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.tinkofffilm.R
 import com.tinkofffilm.databinding.ActivityPopulareBinding
 import com.tinkofffilm.presentation.detaildisplay.DetailActivity
-import com.tinkofffilm.presentation.favoritedisplay.FavoriteActivity
-import com.tinkofffilm.presentation.fragment.MovieDetailFragment
-import com.tinkofffilm.presentation.maindisplay.MainActivity
+import com.tinkofffilm.presentation.detaildisplay.MovieDetailFragment
 import com.tinkofffilm.presentation.maindisplay.adapters.MovieAdapterFavorite
 
 class PopulareActivity : AppCompatActivity() {
@@ -83,6 +82,21 @@ class PopulareActivity : AppCompatActivity() {
             myViewModel.insertInDB(it)
             Toast.makeText(this, "Фильм добавлен в избранное", Toast.LENGTH_SHORT).show()
         }
+
+        myAdapter.onMovieItemClick = {
+
+            when (resources.configuration.orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    val fragment = MovieDetailFragment.newInstance(it.kinopoiskId)
+                    launchFragment(fragment)
+                }
+
+                Configuration.ORIENTATION_PORTRAIT -> {
+                    val intent = DetailActivity.launchIntent(this@PopulareActivity, it.kinopoiskId)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
 
@@ -93,5 +107,13 @@ class PopulareActivity : AppCompatActivity() {
 
     fun launchIntent(context: Context): Intent {
         return Intent(context, PopulareActivity::class.java)
+    }
+
+    private fun launchFragment(fragment: MovieDetailFragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.containerFragmentDetail, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

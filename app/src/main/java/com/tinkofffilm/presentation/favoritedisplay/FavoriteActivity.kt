@@ -5,16 +5,14 @@ import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.tinkofffilm.R
 import com.tinkofffilm.databinding.ActivityFavoriteBinding
 import com.tinkofffilm.presentation.detaildisplay.DetailActivity
+import com.tinkofffilm.presentation.detaildisplay.MovieDetailFragment
 import com.tinkofffilm.presentation.favoritedisplay.adapters.AdapterMovieRepo
-import com.tinkofffilm.presentation.fragment.MovieDetailFragment
-import com.tinkofffilm.presentation.maindisplay.adapters.MovieAdapterFavorite
-import com.tinkofffilm.presentation.populare.PopulareActivity
 
 class FavoriteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFavoriteBinding
@@ -43,8 +41,18 @@ class FavoriteActivity : AppCompatActivity() {
         }
 
         myAdapter.onMovieItemClick = {
-            val intent = DetailActivity.launchIntent(this@FavoriteActivity, it.kinopoiskId)
-            startActivity(intent)
+
+            when (resources.configuration.orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> {
+                    val fragment = MovieDetailFragment.newInstance(it.kinopoiskId)
+                    launchFragment(fragment)
+                }
+
+                Configuration.ORIENTATION_PORTRAIT -> {
+                    val intent = DetailActivity.launchIntent(this@FavoriteActivity, it.kinopoiskId)
+                    startActivity(intent)
+                }
+            }
         }
     }
 
@@ -88,6 +96,14 @@ class FavoriteActivity : AppCompatActivity() {
 
     fun launchIntent(context: Context): Intent {
         return Intent(context, FavoriteActivity::class.java)
+    }
+
+    private fun launchFragment(fragment: MovieDetailFragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.containerFragmentDetail, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
 

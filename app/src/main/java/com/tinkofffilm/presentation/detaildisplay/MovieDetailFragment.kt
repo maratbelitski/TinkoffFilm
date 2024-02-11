@@ -1,4 +1,4 @@
-package com.tinkofffilm.presentation.fragment
+package com.tinkofffilm.presentation.detaildisplay
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.tinkofffilm.R
-import com.tinkofffilm.presentation.detaildisplay.DetailViewModel
 
 class MovieDetailFragment : Fragment() {
 

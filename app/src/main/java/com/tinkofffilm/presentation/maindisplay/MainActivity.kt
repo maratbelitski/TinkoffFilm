@@ -11,8 +11,7 @@ import com.tinkofffilm.databinding.ActivityMainBinding
 import com.tinkofffilm.presentation.detaildisplay.DetailActivity
 import com.tinkofffilm.presentation.favoritedisplay.FavoriteActivity
 
-import com.tinkofffilm.presentation.favoritedisplay.FavoriteViewModel
-import com.tinkofffilm.presentation.fragment.MovieDetailFragment
+import com.tinkofffilm.presentation.detaildisplay.MovieDetailFragment
 import com.tinkofffilm.presentation.maindisplay.adapters.MovieAdapterFavorite
 import com.tinkofffilm.presentation.populare.PopulareActivity
 
