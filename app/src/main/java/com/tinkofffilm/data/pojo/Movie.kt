@@ -1,42 +1,42 @@
 package com.tinkofffilm.data.pojo
 
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.tinkofffilm.data.pojo.Countries
-import com.tinkofffilm.data.pojo.Genres
 
 /**
  * @author Belitski Marat
  * @date  09.02.2024
  * @project TinkoffFilm
  */
+
 data class Movie (
-    @PrimaryKey(autoGenerate = true)
-    val id:Int = 0,
 
     @SerializedName("kinopoiskId")
-    var kinopoiskId : Int,
+    var kinopoiskId : Int = 0,
 
     @SerializedName("nameRu")
-    var nameRu : String,
+    var nameRu : String = "",
 
+    @Ignore
     @SerializedName("countries")
-    var countries : List<Countries>,
+    var countries : List<Countries>?,
 
+    @Ignore
     @SerializedName("genres")
-    var genres : List<Genres>,
+    var genres : List<Genres>?,
 
     @SerializedName("ratingImdb")
-    var ratingImdb : String,
+    var ratingImdb : String= "",
 
     @SerializedName("ratingKinopoisk")
-    var ratingKinopoisk : String,
+    var ratingKinopoisk : String= "",
 
     @SerializedName("year")
-    var year : String,
+    var year : String= "",
 
     @SerializedName("posterUrl")
-    var posterUrl : String,
+    var posterUrl : String= "",
 
-    var isFavorite:Int = 0
+    var favorite:Int = 0
 )

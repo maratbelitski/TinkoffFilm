@@ -40,6 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="избранное"
+        android:backgroundTint="#AFAFAF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPopular"
         app:layout_constraintHorizontal_bias="0.5"
@@ -49,6 +50,7 @@
         android:id="@+id/btnPopular"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="#AFAFAF"
         android:text="популярное"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline"
@@ -73,4 +75,26 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".presentation.detaildisplay.DetailActivity"
         tools:layout="@layout/fragment_movie_detail" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnPrev"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#AFAFAF"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnFavorite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/arrow_left" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnNext"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#AFAFAF"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnPopular"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:srcCompat="@drawable/arrow_right" />
 </androidx.constraintlayout.widget.ConstraintLayout>

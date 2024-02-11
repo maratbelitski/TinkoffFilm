@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFD600"
-    tools:context=".presentation.maindisplay.MainActivity">
+    tools:context=".presentation.populare.PopulareActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/btnFavorite"
+        app:layout_constraintBottom_toBottomOf="@+id/included"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,39 +36,15 @@
         android:id="@+id/included"
         android:visibility="invisible"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnFavorite"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="избранное"
-        android:backgroundTint="#AFAFAF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnPopular"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnPopular"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="популярное"
-        android:textColor="@color/black"
-        android:backgroundTint="#AFAFAF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnFavorite" />
-
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnPrev"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
-        android:clickable="true"
         android:backgroundTint="#AFAFAF"
-        app:layout_constraintBottom_toTopOf="@+id/btnFavorite"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/arrow_left" />
 
@@ -80,7 +56,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="#AFAFAF"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/btnPopular"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/arrow_right" />
 </androidx.constraintlayout.widget.ConstraintLayout>

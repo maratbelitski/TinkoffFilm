@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.tinkofffilm.data.pojo.Movie
 import com.tinkofffilm.data.pojo.MovieRepo
 import com.tinkofffilm.data.pojo.ResponseServer
+import com.tinkofffilm.data.retrofit.ApiService
 import io.reactivex.rxjava3.core.Single
 
 /**
@@ -12,9 +13,8 @@ import io.reactivex.rxjava3.core.Single
  * @date  10.02.2024
  * @project TinkoffFilm
  */
-interface MoviesRepository {
-    fun insertMovieInDBUseCase(movie: MovieRepo)
-    fun deleteMovieInDB(id:Int)
-    fun loadPopularMovies(page:Int) : Single<ResponseServer>?
-    fun loadAllMoviesFromDB() : MutableList<MovieRepo>
+class LoadAllMoviesFromDBUseCase(private val moviesApiRepository: MoviesRepository) {
+    fun loadAllMoviesFromDB() : MutableList<MovieRepo> {
+        return  moviesApiRepository.loadAllMoviesFromDB()
+    }
 }

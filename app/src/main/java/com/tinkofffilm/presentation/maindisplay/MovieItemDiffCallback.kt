@@ -10,7 +10,7 @@ import com.tinkofffilm.data.pojo.Movie
  */
 class MovieItemDiffCallback: DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.kinopoiskId == newItem.kinopoiskId
     }
 
     override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {

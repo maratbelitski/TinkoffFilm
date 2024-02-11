@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @project TinkoffFilm
  */
 object ApiFactory {
-    private const val BASE_URI = "https://kinopoiskapiunofficial.tech/api/v2.2/"
+    private const val BASE_URI = "https://kinopoiskapiunofficial.tech/"
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URI)

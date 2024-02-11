@@ -1,7 +1,6 @@
-package com.tinkofffilm.presentation.maindisplay
+package com.tinkofffilm.presentation.populare
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,10 +9,9 @@ import com.tinkofffilm.data.MoviesRepositoryImpl
 import com.tinkofffilm.data.pojo.Movie
 import com.tinkofffilm.data.pojo.MovieRepo
 import com.tinkofffilm.data.pojo.ResponseServer
-import com.tinkofffilm.domain.DeleteMovieIFromDBUseCase
 import com.tinkofffilm.domain.InsertMovieInDBUseCase
-import com.tinkofffilm.domain.LoadAllMoviesFromDBUseCase
 import com.tinkofffilm.domain.LoadAllMoviesUseCase
+import com.tinkofffilm.domain.LoadPopularMoviesUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -25,22 +23,18 @@ import kotlinx.coroutines.launch
  * @date  10.02.2024
  * @project TinkoffFilm
  */
-class MainViewModel(application: Application) : AndroidViewModel(application) {
-
+class PopularViewModel(application: Application) : AndroidViewModel(application) {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     private val repository = MoviesRepositoryImpl(application)
-
-    private val loadAllMoviesFromApi = LoadAllMoviesUseCase(repository)
     private val insertMovie = InsertMovieInDBUseCase(repository)
+    private val loadPopularMoviesFromApi = LoadPopularMoviesUseCase(repository)
+
+    private var currentPage = 1
 
 
-    private var currentPage = 1;
-
-
-    private val allMoviesFromApi = MutableLiveData<ResponseServer?>()
-    val allMoviesFromApiLD: LiveData<ResponseServer?>
-        get() = allMoviesFromApi
-
+    private val allMovies = MutableLiveData<ResponseServer?>()
+    val allMoviesLD: LiveData<ResponseServer?>
+        get() = allMovies
 
     private val progressBar = MutableLiveData(true)
     val progressBarLD: LiveData<Boolean>
@@ -51,10 +45,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         get() = noConnect
 
     private val isLoad = MutableLiveData(false)
-
+    val isLoadLD: LiveData<Boolean>
+        get() = isLoad
 
     init {
-        loadMoviesFromAPI(currentPage)
+        loadMovies(currentPage)
     }
 
     fun insertInDB(movie: Movie) {
@@ -65,7 +60,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-
 
     private fun insertNewMovie(
         newMovie: MovieRepo,
@@ -87,10 +81,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         insertMovie.insertMovieInDB(newMovie)
     }
-
-
-    fun loadMoviesFromAPI(page:Int) {
-        val disposable = loadAllMoviesFromApi.loadAllMovies(page)
+    fun loadMovies(page:Int) {
+        val disposable = loadPopularMoviesFromApi.loadPopularMovies(page)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.doOnSubscribe {
@@ -104,10 +96,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             }
             ?.subscribe({
                 noConnect.value = false
-                allMoviesFromApi.value = it
+                allMovies.value = it
             }, {
                 noConnect.value = true
-                loadMoviesFromAPI(currentPage)
+                loadMovies(page)
             })
 
         if (disposable != null) {

@@ -1,25 +1,24 @@
-package com.tinkofffilm.presentation.maindisplay
+package com.tinkofffilm.presentation.populare
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import com.tinkofffilm.R
-import com.tinkofffilm.databinding.ActivityMainBinding
+import com.tinkofffilm.databinding.ActivityPopulareBinding
 import com.tinkofffilm.presentation.detaildisplay.DetailActivity
 import com.tinkofffilm.presentation.favoritedisplay.FavoriteActivity
-
-import com.tinkofffilm.presentation.favoritedisplay.FavoriteViewModel
 import com.tinkofffilm.presentation.fragment.MovieDetailFragment
+import com.tinkofffilm.presentation.maindisplay.MainActivity
 import com.tinkofffilm.presentation.maindisplay.adapters.MovieAdapterFavorite
-import com.tinkofffilm.presentation.populare.PopulareActivity
 
-class MainActivity : AppCompatActivity() {
-    private val myViewModel: MainViewModel by viewModels()
-    private lateinit var binding: ActivityMainBinding
+class PopulareActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityPopulareBinding
     private lateinit var myAdapter: MovieAdapterFavorite
+    private val myViewModel: PopularViewModel by viewModels()
 
     companion object {
         private var currentPage = 1
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityPopulareBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initViews()
@@ -35,13 +34,8 @@ class MainActivity : AppCompatActivity() {
         doListeners()
     }
 
-    private fun initViews() {
-        myAdapter = MovieAdapterFavorite()
-        binding.recycler.adapter = myAdapter
-    }
-
     private fun showObservers() {
-        myViewModel.allMoviesFromApiLD.observe(this) {
+        myViewModel.allMoviesLD.observe(this) {
             myAdapter.submitList(it?.items)
         }
 
@@ -64,29 +58,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun doListeners() {
-        binding.included.btnReload.setOnClickListener {
-            myViewModel.loadMoviesFromAPI(currentPage)
-        }
-
-        binding.btnFavorite.setOnClickListener {
-            startActivity(FavoriteActivity().launchIntent(this))
-        }
-
-        binding.btnPopular.setOnClickListener {
-            startActivity(PopulareActivity().launchIntent(this))
-        }
-
         binding.btnNext?.setOnClickListener {
             currentPage++
-            myViewModel.loadMoviesFromAPI(currentPage)
+            myViewModel.loadMovies(currentPage)
         }
 
         binding.btnPrev?.setOnClickListener {
             if (currentPage > 1) {
                 currentPage--
-                myViewModel.loadMoviesFromAPI(currentPage)
+                myViewModel.loadMovies(currentPage)
             } else {
                 currentPage = 1
             }
@@ -94,17 +75,8 @@ class MainActivity : AppCompatActivity() {
 
         myAdapter.onMovieItemClick = {
 
-            when (resources.configuration.orientation) {
-                Configuration.ORIENTATION_LANDSCAPE -> {
-                    val fragment = MovieDetailFragment.newInstance(it.kinopoiskId)
-                    launchFragment(fragment)
-                }
-
-                Configuration.ORIENTATION_PORTRAIT -> {
-                    val intent = DetailActivity.launchIntent(this@MainActivity, it.kinopoiskId)
-                    startActivity(intent)
-                }
-            }
+            val intent = DetailActivity.launchIntent(this@PopulareActivity, it.kinopoiskId)
+            startActivity(intent)
         }
 
         myAdapter.onStarFavoriteLongClick = {
@@ -113,11 +85,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun launchFragment(fragment: MovieDetailFragment) {
-        supportFragmentManager.popBackStack()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.containerFragmentDetail, fragment)
-            .addToBackStack(null)
-            .commit()
+
+    private fun initViews() {
+        myAdapter = MovieAdapterFavorite()
+        binding.recycler.adapter = myAdapter
+    }
+
+    fun launchIntent(context: Context): Intent {
+        return Intent(context, PopulareActivity::class.java)
     }
 }
