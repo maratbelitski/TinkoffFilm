@@ -7,7 +7,7 @@
 <p align="center">
    <img src="https://i.imgur.com/VwmhJWI.jpg" width="200" height ="400">
    <img src="https://i.imgur.com/HHHrzPY.jpg" width="200" height ="400">
-   <img src="https://i.imgur.com/tqRqy16.jpg" width="200" height ="800">
+   <img src="https://i.imgur.com/tqRqy16.jpg" width="800" height ="400">
 </p>
 
 # Description
