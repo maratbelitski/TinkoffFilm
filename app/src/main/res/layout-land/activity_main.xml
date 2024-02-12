@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/btnFavorite"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:spanCount="2" />
@@ -22,7 +22,6 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/recycler"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,8 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/light_grey"
-        android:text="@string/favorite_text"
-        android:textColor="@color/black"
+        android:text="@string/btn_favorite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPopular"
         app:layout_constraintHorizontal_bias="0.5"
@@ -53,21 +51,37 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/light_grey"
-        android:text="@string/btn_favorite"
-        android:textColor="@color/black"
+        android:text="@string/btn_populare"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnFavorite" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/containerFragmentDetail"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".presentation.detaildisplay.DetailActivity"
+        tools:layout="@layout/fragment_movie_detail" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnPrev"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/light_grey"
-        android:contentDescription="@string/button_description"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/btnFavorite"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,12 +91,10 @@
         android:id="@+id/btnNext"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="@string/button_description"
         android:backgroundTint="@color/light_grey"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/btnPopular"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:srcCompat="@drawable/arrow_right" />
 </androidx.constraintlayout.widget.ConstraintLayout>

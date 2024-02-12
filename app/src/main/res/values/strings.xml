@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TinkoffFilm</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="toast_favorite">Фильм добавлен в избранное</string>
+    <string name="favorite_text">избранное</string>
+    <string name="button_description">button</string>
+    <string name="btn_favorite">избранное</string>
+    <string name="btn_populare">популярное</string>
+    <string name="tools_name">Хороший фильм</string>
+    <string name="tools_year">2000</string>
+    <string name="tools_country">Беларусь</string>
+    <string name="tools_geanre">Драма</string>
+    <string name="tools_description">Драма</string>
+    <string name="message_error">Извините! Проблема с подключением…</string>
+    <string name="button_reload">обновить</string>
 </resources>
