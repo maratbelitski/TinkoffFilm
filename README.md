@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-   <img src="https://i.imgur.com/VwmhJWI.jpg" width="200" height ="400">
+   <img src="https://i.imgur.com/mQL877l.jpg" width="200" height ="400">
    <img src="https://i.imgur.com/HHHrzPY.jpg" width="200" height ="400">
    <img src="https://i.imgur.com/tqRqy16.jpg" width="800" height ="400">
 </p>
@@ -30,6 +30,4 @@
 - Room;
 - RXJava
 - а также принципы Clean architecture, SOLID;
-  
-  
-[<img src="https://i.imgur.com/XVSCF5a.jpg" width="300" height ="100" >](https://youtube.com/shorts/qVQLX2-fNFs?feature=share)
+
