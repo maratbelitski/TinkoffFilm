@@ -31,3 +31,4 @@
 - RXJava
 - а также принципы Clean architecture, SOLID;
 
+[<img src="https://i.imgur.com/XVSCF5a.jpg" width="300" height ="100" >](https://youtube.com/shorts/sNQ8c6zHmzM)
