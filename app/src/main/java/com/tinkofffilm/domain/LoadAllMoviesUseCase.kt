@@ -1,7 +1,5 @@
 package com.tinkofffilm.domain
 
-import androidx.lifecycle.LiveData
-import com.tinkofffilm.data.pojo.Movie
 import com.tinkofffilm.data.pojo.ResponseServer
 import com.tinkofffilm.data.retrofit.ApiService
 import io.reactivex.rxjava3.core.Single
@@ -12,7 +10,7 @@ import io.reactivex.rxjava3.core.Single
  * @project TinkoffFilm
  */
 class LoadAllMoviesUseCase(private val moviesApiRepository: ApiService) {
-    fun loadAllMovies(numberPage:Int) : Single<ResponseServer>? {
-        return  moviesApiRepository.loadMovies(numberPage)
+    fun loadAllMovies(numberPage: Int): Single<ResponseServer>? {
+        return moviesApiRepository.loadMovies(numberPage)
     }
 }

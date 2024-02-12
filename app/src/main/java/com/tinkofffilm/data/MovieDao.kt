@@ -10,8 +10,10 @@ import com.tinkofffilm.data.pojo.MovieRepo
 interface MovieDao {
     @Query("SELECT * FROM MovieTable")
     fun getAllMovies(): MutableList<MovieRepo>
+
     @Query("DELETE FROM MovieTable WHERE kinopoiskId = :kinopoiskId")
-    fun removeMovie(kinopoiskId:Int)
+    fun removeMovie(kinopoiskId: Int)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(movie:MovieRepo)
+    fun insertMovie(movie: MovieRepo)
 }

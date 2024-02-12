@@ -1,9 +1,6 @@
 package com.tinkofffilm.data
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.tinkofffilm.data.pojo.Movie
 import com.tinkofffilm.data.pojo.MovieDetail
 import com.tinkofffilm.data.pojo.MovieRepo
 import com.tinkofffilm.data.pojo.ResponseServer
@@ -17,9 +14,9 @@ import io.reactivex.rxjava3.core.Single
  * @date  10.02.2024
  * @project TinkoffFilm
  */
-class MoviesRepositoryImpl(application: Application) : ApiService,MoviesRepository {
+class MoviesRepositoryImpl(application: Application) : ApiService, MoviesRepository {
     private val dao = MovieDataBase.getDB(application).getDao()
-    override fun loadMovies(numberPage:Int): Single<ResponseServer>? {
+    override fun loadMovies(numberPage: Int): Single<ResponseServer>? {
         return ApiFactory.apiService.loadMovies(numberPage)
     }
 
@@ -36,12 +33,11 @@ class MoviesRepositoryImpl(application: Application) : ApiService,MoviesReposito
         return dao.removeMovie(id)
     }
 
-    override fun loadPopularMovies(page:Int): Single<ResponseServer>? {
+    override fun loadPopularMovies(page: Int): Single<ResponseServer>? {
         return ApiFactory.apiService.loadPopularMovies(page)
     }
 
     override fun loadAllMoviesFromDB(): MutableList<MovieRepo> {
-        return  dao.getAllMovies()
+        return dao.getAllMovies()
     }
-
 }

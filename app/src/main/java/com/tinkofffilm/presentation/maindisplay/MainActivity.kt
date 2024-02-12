@@ -77,12 +77,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(PopulareActivity().launchIntent(this))
         }
 
-        binding.btnNext?.setOnClickListener {
+        binding.btnNext.setOnClickListener {
             currentPage++
             myViewModel.loadMoviesFromAPI(currentPage)
         }
 
-        binding.btnPrev?.setOnClickListener {
+        binding.btnPrev.setOnClickListener {
             if (currentPage > 1) {
                 currentPage--
                 myViewModel.loadMoviesFromAPI(currentPage)
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 
         myAdapter.onStarFavoriteLongClick = {
             myViewModel.insertInDB(it)
-            Toast.makeText(this, "Фильм добавлен в избранное", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toast_favorite, Toast.LENGTH_SHORT).show()
         }
     }
 

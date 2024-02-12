@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD600"
+    android:background="@color/yellow"
     tools:context=".presentation.populare.PopulareActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -32,9 +32,9 @@
         tools:visibility="visible" />
 
     <include
-        layout="@layout/layout_no_connect"
         android:id="@+id/included"
-        android:visibility="invisible"/>
+        layout="@layout/layout_no_connect"
+        android:visibility="invisible" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnPrev"
@@ -42,8 +42,9 @@
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="#AFAFAF"
+        android:backgroundTint="@color/light_grey"
         android:clickable="true"
+        android:contentDescription="@string/button_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/arrow_left" />
@@ -54,8 +55,9 @@
         android:layout_height="60dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="#AFAFAF"
+        android:backgroundTint="@color/light_grey"
         android:clickable="true"
+        android:contentDescription="@string/button_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/arrow_right" />

@@ -1,6 +1,5 @@
 package com.tinkofffilm.domain
 
-import com.tinkofffilm.data.pojo.Movie
 import com.tinkofffilm.data.pojo.MovieRepo
 
 /**
@@ -9,7 +8,7 @@ import com.tinkofffilm.data.pojo.MovieRepo
  * @project TinkoffFilm
  */
 class InsertMovieInDBUseCase(private val moviesRepository: MoviesRepository) {
-    fun insertMovieInDB(movie: MovieRepo){
-      return moviesRepository.insertMovieInDBUseCase(movie)
+    fun insertMovieInDB(movie: MovieRepo) {
+        return moviesRepository.insertMovieInDBUseCase(movie)
     }
 }

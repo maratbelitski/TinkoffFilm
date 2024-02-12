@@ -46,6 +46,7 @@ class MovieDetailFragment : Fragment() {
             this.idKinopoisk = it.getInt(ID_KINOPOISK)
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -85,9 +86,9 @@ class MovieDetailFragment : Fragment() {
 
         myViewModel.noConnectLD.observe(viewLifecycleOwner) {
             if (it == true) {
-               included.visibility = View.VISIBLE
+                included.visibility = View.VISIBLE
             } else {
-               included.visibility = View.INVISIBLE
+                included.visibility = View.INVISIBLE
             }
         }
     }

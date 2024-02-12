@@ -8,7 +8,7 @@ import com.tinkofffilm.data.pojo.Movie
  * @date  09.02.2024
  * @project TinkoffFilm
  */
-class MovieItemDiffCallback: DiffUtil.ItemCallback<Movie>() {
+class MovieItemDiffCallback : DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
         return oldItem.kinopoiskId == newItem.kinopoiskId
     }

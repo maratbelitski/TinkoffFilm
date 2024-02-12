@@ -10,7 +10,6 @@ import com.tinkofffilm.data.pojo.Movie
 import com.tinkofffilm.data.pojo.MovieRepo
 import com.tinkofffilm.data.pojo.ResponseServer
 import com.tinkofffilm.domain.InsertMovieInDBUseCase
-import com.tinkofffilm.domain.LoadAllMoviesUseCase
 import com.tinkofffilm.domain.LoadPopularMoviesUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -24,6 +23,7 @@ import kotlinx.coroutines.launch
  * @project TinkoffFilm
  */
 class PopularViewModel(application: Application) : AndroidViewModel(application) {
+
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     private val repository = MoviesRepositoryImpl(application)
     private val insertMovie = InsertMovieInDBUseCase(repository)
@@ -45,8 +45,7 @@ class PopularViewModel(application: Application) : AndroidViewModel(application)
         get() = noConnect
 
     private val isLoad = MutableLiveData(false)
-    val isLoadLD: LiveData<Boolean>
-        get() = isLoad
+
 
     init {
         loadMovies(currentPage)
@@ -81,7 +80,8 @@ class PopularViewModel(application: Application) : AndroidViewModel(application)
 
         insertMovie.insertMovieInDB(newMovie)
     }
-    fun loadMovies(page:Int) {
+
+    fun loadMovies(page: Int) {
         val disposable = loadPopularMoviesFromApi.loadPopularMovies(page)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())

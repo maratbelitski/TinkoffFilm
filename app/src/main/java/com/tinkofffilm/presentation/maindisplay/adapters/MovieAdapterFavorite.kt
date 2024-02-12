@@ -2,15 +2,12 @@ package com.tinkofffilm.presentation.maindisplay.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.tinkofffilm.R
 import com.tinkofffilm.data.pojo.Movie
-import com.tinkofffilm.presentation.favoritedisplay.adapters.AdapterMovieRepo
 import com.tinkofffilm.presentation.maindisplay.MovieItemDiffCallback
 import com.tinkofffilm.presentation.maindisplay.MovieItemHolder
-import kotlin.coroutines.coroutineContext
 
 /**
  * @author Belitski Marat
@@ -29,9 +26,6 @@ class MovieAdapterFavorite : ListAdapter<Movie, MovieItemHolder>(MovieItemDiffCa
     var onMovieItemClick: ((Movie) -> Unit)? = null
     var onStarFavoriteLongClick: ((Movie) -> Unit)? = null
 
-//    private var starOn = android.R.drawable.btn_star_big_on
-//    private var starOff = android.R.drawable.btn_star_big_off
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemHolder {
 
         var layout = R.layout.item_movie
@@ -44,7 +38,6 @@ class MovieAdapterFavorite : ListAdapter<Movie, MovieItemHolder>(MovieItemDiffCa
     }
 
     override fun onBindViewHolder(holder: MovieItemHolder, position: Int) {
-
 
         if (getItem(position).ratingKinopoisk != null) {
             val rating = getItem(position).ratingKinopoisk.toDouble()
@@ -60,7 +53,6 @@ class MovieAdapterFavorite : ListAdapter<Movie, MovieItemHolder>(MovieItemDiffCa
             holder.ratingMovie.text = DEFAULT_RATING
             holder.ratingMovie.setBackgroundResource(R.drawable.cercle_white)
         }
-
 
 
         holder.nameMovie.text = getItem(position).nameRu

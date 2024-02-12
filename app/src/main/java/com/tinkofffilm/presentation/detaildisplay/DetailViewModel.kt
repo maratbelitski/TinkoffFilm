@@ -16,16 +16,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * @date  10.02.2024
  * @project TinkoffFilm
  */
-class DetailViewModel (application: Application) : AndroidViewModel(application){
+class DetailViewModel(application: Application) : AndroidViewModel(application) {
+
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     private val repository = MoviesRepositoryImpl(application)
 
     private val loadDetailMoviesFromApi = LoadDetailMoviesUseCase(repository)
 
-
     private val detailMovies = MutableLiveData<MovieDetail>()
     val detailMoviesLD: LiveData<MovieDetail>
-    get() = detailMovies
+        get() = detailMovies
 
     private val progressBar = MutableLiveData(true)
     val progressBarLD: LiveData<Boolean>
@@ -35,7 +35,7 @@ class DetailViewModel (application: Application) : AndroidViewModel(application)
     val noConnectLD: LiveData<Boolean>
         get() = noConnect
 
-    fun loadDetailMovie(idKinopoisk:Int) {
+    fun loadDetailMovie(idKinopoisk: Int) {
         val disposable = loadDetailMoviesFromApi.loadAllMovies(idKinopoisk)
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())

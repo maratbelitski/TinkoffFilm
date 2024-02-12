@@ -15,6 +15,7 @@ import com.tinkofffilm.presentation.detaildisplay.MovieDetailFragment
 import com.tinkofffilm.presentation.maindisplay.adapters.MovieAdapterFavorite
 
 class PopulareActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityPopulareBinding
     private lateinit var myAdapter: MovieAdapterFavorite
     private val myViewModel: PopularViewModel by viewModels()
@@ -58,12 +59,12 @@ class PopulareActivity : AppCompatActivity() {
     }
 
     private fun doListeners() {
-        binding.btnNext?.setOnClickListener {
+        binding.btnNext.setOnClickListener {
             currentPage++
             myViewModel.loadMovies(currentPage)
         }
 
-        binding.btnPrev?.setOnClickListener {
+        binding.btnPrev.setOnClickListener {
             if (currentPage > 1) {
                 currentPage--
                 myViewModel.loadMovies(currentPage)
@@ -80,7 +81,7 @@ class PopulareActivity : AppCompatActivity() {
 
         myAdapter.onStarFavoriteLongClick = {
             myViewModel.insertInDB(it)
-            Toast.makeText(this, "Фильм добавлен в избранное", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toast_favorite, Toast.LENGTH_SHORT).show()
         }
 
         myAdapter.onMovieItemClick = {

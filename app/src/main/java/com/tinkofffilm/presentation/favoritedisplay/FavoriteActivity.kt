@@ -3,9 +3,9 @@ package com.tinkofffilm.presentation.favoritedisplay
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.tinkofffilm.R
@@ -15,9 +15,11 @@ import com.tinkofffilm.presentation.detaildisplay.MovieDetailFragment
 import com.tinkofffilm.presentation.favoritedisplay.adapters.AdapterMovieRepo
 
 class FavoriteActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityFavoriteBinding
     private lateinit var myAdapter: AdapterMovieRepo
     private val myViewModel: FavoriteViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
@@ -36,9 +38,6 @@ class FavoriteActivity : AppCompatActivity() {
     }
 
     private fun doListeners() {
-        myAdapter.onStarFavoriteLongClick = {
-            myViewModel.removeMovieVM(it.kinopoiskId)
-        }
 
         myAdapter.onMovieItemClick = {
 
@@ -106,5 +105,3 @@ class FavoriteActivity : AppCompatActivity() {
             .commit()
     }
 }
-
-

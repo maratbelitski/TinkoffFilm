@@ -1,9 +1,7 @@
 package com.tinkofffilm.data.pojo
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 /**
  * @author Belitski Marat

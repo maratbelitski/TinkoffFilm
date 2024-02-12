@@ -1,12 +1,6 @@
 package com.tinkofffilm.domain
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.tinkofffilm.data.pojo.Movie
 import com.tinkofffilm.data.pojo.MovieRepo
-import com.tinkofffilm.data.pojo.ResponseServer
-import com.tinkofffilm.data.retrofit.ApiService
-import io.reactivex.rxjava3.core.Single
 
 /**
  * @author Belitski Marat
@@ -14,7 +8,7 @@ import io.reactivex.rxjava3.core.Single
  * @project TinkoffFilm
  */
 class LoadAllMoviesFromDBUseCase(private val moviesApiRepository: MoviesRepository) {
-    fun loadAllMoviesFromDB() : MutableList<MovieRepo> {
-        return  moviesApiRepository.loadAllMoviesFromDB()
+    fun loadAllMoviesFromDB(): MutableList<MovieRepo> {
+        return moviesApiRepository.loadAllMoviesFromDB()
     }
 }

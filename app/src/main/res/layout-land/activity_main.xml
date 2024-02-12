@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD600"
+    android:background="@color/yellow"
     tools:context=".presentation.maindisplay.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -39,8 +39,8 @@
         android:id="@+id/btnFavorite"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="избранное"
-        android:backgroundTint="#AFAFAF"
+        android:backgroundTint="@color/light_grey"
+        android:text="@string/btn_favorite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPopular"
         app:layout_constraintHorizontal_bias="0.5"
@@ -50,8 +50,8 @@
         android:id="@+id/btnPopular"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#AFAFAF"
-        android:text="популярное"
+        android:backgroundTint="@color/light_grey"
+        android:text="@string/btn_populare"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintHorizontal_bias="0.5"
@@ -62,8 +62,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
@@ -81,7 +81,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="#AFAFAF"
+        android:backgroundTint="@color/light_grey"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/btnFavorite"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +92,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="#AFAFAF"
+        android:backgroundTint="@color/light_grey"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/btnPopular"
         app:layout_constraintEnd_toStartOf="@+id/guideline"

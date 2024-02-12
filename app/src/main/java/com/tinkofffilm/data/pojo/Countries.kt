@@ -7,8 +7,9 @@ import com.google.gson.annotations.SerializedName
  * @date  09.02.2024
  * @project TinkoffFilm
  */
-data class Countries (
-    @SerializedName("country") var country : String
+data class Countries(
+    @SerializedName("country")
+    var country: String
 ) {
     override fun toString(): String {
         return "Страна: $country"

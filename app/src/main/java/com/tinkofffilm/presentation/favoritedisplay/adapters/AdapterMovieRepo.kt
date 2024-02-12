@@ -5,12 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.tinkofffilm.R
-import com.tinkofffilm.data.pojo.Movie
 import com.tinkofffilm.data.pojo.MovieRepo
 import com.tinkofffilm.presentation.favoritedisplay.MovieRepoItemDiffCallback
-import com.tinkofffilm.presentation.maindisplay.MovieItemDiffCallback
 import com.tinkofffilm.presentation.maindisplay.MovieItemHolder
-import com.tinkofffilm.presentation.maindisplay.adapters.MovieAdapterFavorite
 
 /**
  * @author Belitski Marat
@@ -22,15 +19,11 @@ class AdapterMovieRepo : ListAdapter<MovieRepo, MovieItemHolder>(MovieRepoItemDi
         private const val FAVORITE = 1
         private const val NO_FAVORITE = 0
         private const val DEFAULT_RATING = "0.0"
-        private const val DEFAULT_SIZE = 0
     }
 
 
     var onMovieItemClick: ((MovieRepo) -> Unit)? = null
-    var onStarFavoriteLongClick: ((MovieRepo) -> Unit)? = null
 
-//    private var starOn = android.R.drawable.btn_star_big_on
-//    private var starOff = android.R.drawable.btn_star_big_off
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemHolder {
 
@@ -44,7 +37,6 @@ class AdapterMovieRepo : ListAdapter<MovieRepo, MovieItemHolder>(MovieRepoItemDi
     }
 
     override fun onBindViewHolder(holder: MovieItemHolder, position: Int) {
-
 
         val rating = getItem(position).ratingKinopoisk!!.toDouble()
         holder.ratingMovie.text = getItem(position).ratingKinopoisk
@@ -61,33 +53,27 @@ class AdapterMovieRepo : ListAdapter<MovieRepo, MovieItemHolder>(MovieRepoItemDi
         }
 
 
+        holder.nameMovie.text = getItem(position).nameRu
+        holder.dateMovie.text = getItem(position).year
+        holder.genreMovie.text = getItem(position).genres
 
-            holder.nameMovie.text = getItem(position).nameRu
-            holder.dateMovie.text = getItem(position).year
-            holder.genreMovie.text = getItem(position).genres
-
-            val movie = getItem(position)
-            Glide.with(holder.itemView)
-                .load(movie.posterUrl)
-                .into(holder.posterMovie)
-
-
-            holder.itemView.setOnLongClickListener {
-                onStarFavoriteLongClick?.invoke(getItem(position))
-                true
-            }
-
-            holder.itemView.setOnClickListener {
-                onMovieItemClick?.invoke(getItem(position))
-            }
-        }
+        val movie = getItem(position)
+        Glide.with(holder.itemView)
+            .load(movie.posterUrl)
+            .into(holder.posterMovie)
 
 
-        override fun getItemViewType(position: Int): Int {
-            return if (getItem(position).favorite == FAVORITE) {
-                FAVORITE
-            } else {
-                NO_FAVORITE
-            }
+        holder.itemView.setOnClickListener {
+            onMovieItemClick?.invoke(getItem(position))
         }
     }
+
+
+    override fun getItemViewType(position: Int): Int {
+        return if (getItem(position).favorite == FAVORITE) {
+            FAVORITE
+        } else {
+            NO_FAVORITE
+        }
+    }
+}

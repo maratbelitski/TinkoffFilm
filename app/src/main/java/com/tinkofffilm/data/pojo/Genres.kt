@@ -7,10 +7,10 @@ import com.google.gson.annotations.SerializedName
  * @date  09.02.2024
  * @project TinkoffFilm
  */
-data class Genres (
+data class Genres(
 
-    @SerializedName("genre") var genre : String
-
+    @SerializedName("genre")
+    var genre: String
 ) {
     override fun toString(): String {
         return "Жанр: $genre"
