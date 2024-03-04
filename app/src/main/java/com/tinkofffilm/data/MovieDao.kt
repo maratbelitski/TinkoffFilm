@@ -9,7 +9,7 @@ import com.tinkofffilm.data.pojo.MovieRepo
 @Dao
 interface MovieDao {
     @Query("SELECT * FROM MovieTable")
-    fun getAllMovies(): MutableList<MovieRepo>
+    fun getAllMovies(): MutableList<MovieRepo?>
 
     @Query("DELETE FROM MovieTable WHERE kinopoiskId = :kinopoiskId")
     fun removeMovie(kinopoiskId: Int)

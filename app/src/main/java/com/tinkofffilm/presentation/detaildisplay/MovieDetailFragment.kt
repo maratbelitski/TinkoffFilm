@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.tinkofffilm.R
+import com.tinkofffilm.presentation.maindisplay.adapters.MovieAdapterFavorite
 
 class MovieDetailFragment : Fragment() {
 
@@ -68,8 +69,21 @@ class MovieDetailFragment : Fragment() {
             tvNameMovie.text = it.nameRu
             tvDateMovie.text = it.year.toString()
             description.text = it.description
-            tvGenre.text = it.genres[DEFAULT_VALUE].toString()
-            tvCountry.text = it.countries[DEFAULT_VALUE].toString()
+
+            val genre = it.genres.size
+            if(genre == DEFAULT_VALUE){
+                tvGenre.text = getString(R.string.unknow_value_movie)
+            } else{
+                tvGenre.text = it.genres[DEFAULT_VALUE].toString()
+            }
+
+            val country = it.countries.size
+            if(country == DEFAULT_VALUE){
+                tvCountry.text = getString(R.string.unknow_value_movie)
+            } else{
+                tvCountry.text = it.countries[DEFAULT_VALUE].toString()
+            }
+
 
             Glide.with(requireActivity())
                 .load(it.posterUrl)

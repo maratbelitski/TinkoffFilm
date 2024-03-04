@@ -37,17 +37,23 @@ class AdapterMovieRepo : ListAdapter<MovieRepo, MovieItemHolder>(MovieRepoItemDi
     }
 
     override fun onBindViewHolder(holder: MovieItemHolder, position: Int) {
+//
+//        if (getItem(position).favorite != 0){
+//            holder.starFavorite.setImageResource(android.R.drawable.btn_star_big_on)
+//        } else {
+//            holder.starFavorite.setImageResource(android.R.drawable.btn_star_big_off)
+//        }
 
         val rating = getItem(position).ratingKinopoisk!!.toDouble()
-        holder.ratingMovie.text = getItem(position).ratingKinopoisk
+        holder.ratingMovie.text = rating.toString()
         if (rating >= 8) {
             holder.ratingMovie.setBackgroundResource(R.drawable.cercle_green)
-        } else if (rating in 4.0..6.0) {
+        } else if (rating in 4.0..7.0) {
             holder.ratingMovie.setBackgroundResource(R.drawable.cercle_yellow)
-        } else if (rating in 1.0..5.0) {
+        } else if (rating in 1.0..3.0) {
             holder.ratingMovie.setBackgroundResource(R.drawable.cercle_red)
 
-        } else {
+        } else if (rating == 0.0){
             holder.ratingMovie.text = DEFAULT_RATING
             holder.ratingMovie.setBackgroundResource(R.drawable.cercle_white)
         }
