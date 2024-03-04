@@ -5,23 +5,33 @@ import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.tinkofffilm.R
+import com.tinkofffilm.data.pojo.Movie
+import com.tinkofffilm.data.pojo.MovieRepo
 import com.tinkofffilm.databinding.ActivityPopulareBinding
 import com.tinkofffilm.presentation.detaildisplay.DetailActivity
 import com.tinkofffilm.presentation.detaildisplay.MovieDetailFragment
+import com.tinkofffilm.presentation.maindisplay.MainActivity
 import com.tinkofffilm.presentation.maindisplay.adapters.MovieAdapterFavorite
 
 class PopulareActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPopulareBinding
     private lateinit var myAdapter: MovieAdapterFavorite
+    private var listFromDB = mutableListOf<MovieRepo?>()
+    private lateinit var listFromAPI: List<Movie>
     private val myViewModel: PopularViewModel by viewModels()
+    private var isEmpty = false
+
+
 
     companion object {
-        private var currentPage = 1
+       private const val CURRENT_NUMBER = 1
+        private var currentPage = CURRENT_NUMBER
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +46,12 @@ class PopulareActivity : AppCompatActivity() {
 
     private fun showObservers() {
         myViewModel.allMoviesLD.observe(this) {
-            myAdapter.submitList(it?.items)
+
+            listFromAPI = it.items
+
+            myViewModel.checkForFavorite(listFromAPI, listFromDB)
+
+            myAdapter.submitList(listFromAPI)
         }
 
 
@@ -56,20 +71,40 @@ class PopulareActivity : AppCompatActivity() {
                 binding.included.layoutNoConnect.visibility = View.INVISIBLE
             }
         }
+
+        myViewModel.isEmptyLD.observe(this) {
+            isEmpty = it
+            if (isEmpty) {
+                doIfListIsEmpty()
+            }
+        }
+
+        myViewModel.isFavoriteLD.observe(this) {
+            if (it != null){
+                listFromDB = it
+            }
+
+        }
+    }
+
+    private fun doIfListIsEmpty() {
+        Toast.makeText(this, R.string.toast_is_empty, Toast.LENGTH_SHORT).show()
+        currentPage--
+        myViewModel.loadMovies(currentPage)
     }
 
     private fun doListeners() {
         binding.btnNext.setOnClickListener {
-            currentPage++
-            myViewModel.loadMovies(currentPage)
+                currentPage++
+                myViewModel.loadMovies(currentPage)
         }
 
         binding.btnPrev.setOnClickListener {
-            if (currentPage > 1) {
+            if (currentPage > CURRENT_NUMBER) {
                 currentPage--
                 myViewModel.loadMovies(currentPage)
             } else {
-                currentPage = 1
+                currentPage = CURRENT_NUMBER
             }
         }
 
@@ -80,8 +115,13 @@ class PopulareActivity : AppCompatActivity() {
         }
 
         myAdapter.onStarFavoriteLongClick = {
-            myViewModel.insertInDB(it)
-            Toast.makeText(this, R.string.toast_favorite, Toast.LENGTH_SHORT).show()
+            if (it.favorite != 1){
+                Toast.makeText(this, R.string.toast_favorite, Toast.LENGTH_SHORT).show()
+                Log.i("MyLog","Insert 1 - $it + ${it.favorite}")
+                myViewModel.insertInDB(it)
+            } else {
+                myViewModel.removeMovieVM(it.kinopoiskId)
+            }
         }
 
         myAdapter.onMovieItemClick = {

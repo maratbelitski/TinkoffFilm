@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.tinkofffilm.R
+import com.tinkofffilm.data.pojo.Movie
+import com.tinkofffilm.data.pojo.MovieRepo
 import com.tinkofffilm.databinding.ActivityMainBinding
 import com.tinkofffilm.presentation.detaildisplay.DetailActivity
 import com.tinkofffilm.presentation.favoritedisplay.FavoriteActivity
@@ -19,8 +21,12 @@ class MainActivity : AppCompatActivity() {
     private val myViewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private lateinit var myAdapter: MovieAdapterFavorite
+    private var listFromDB = mutableListOf<MovieRepo?>()
+    private lateinit var listFromAPI: List<Movie>
+    private var isEmpty = false
 
     companion object {
+        private const val IS_ONE = 1
         private var currentPage = 1
     }
 
@@ -40,8 +46,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showObservers() {
-        myViewModel.allMoviesFromApiLD.observe(this) {
-            myAdapter.submitList(it?.items)
+
+        myViewModel.isEmptyLD.observe(this) {
+            isEmpty = it
+            if (isEmpty) {
+                doIfListIsEmpty()
+            }
+        }
+
+        if (!isEmpty) {
+            myViewModel.allMoviesFromApiLD.observe(this) {
+
+               listFromAPI = it.items
+
+               myViewModel.checkForFavorite(listFromAPI, listFromDB)
+
+                myAdapter.submitList(listFromAPI)
+            }
         }
 
 
@@ -59,6 +80,12 @@ class MainActivity : AppCompatActivity() {
                 binding.included.layoutNoConnect.visibility = View.VISIBLE
             } else {
                 binding.included.layoutNoConnect.visibility = View.INVISIBLE
+            }
+        }
+
+        myViewModel.isFavoriteLD.observe(this) {
+            if (it != null){
+                listFromDB = it
             }
         }
     }
@@ -83,11 +110,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnPrev.setOnClickListener {
-            if (currentPage > 1) {
+            if (currentPage > IS_ONE) {
                 currentPage--
                 myViewModel.loadMoviesFromAPI(currentPage)
             } else {
-                currentPage = 1
+                currentPage = IS_ONE
             }
         }
 
@@ -96,6 +123,7 @@ class MainActivity : AppCompatActivity() {
             when (resources.configuration.orientation) {
                 Configuration.ORIENTATION_LANDSCAPE -> {
                     val fragment = MovieDetailFragment.newInstance(it.kinopoiskId)
+
                     launchFragment(fragment)
                 }
 
@@ -107,9 +135,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         myAdapter.onStarFavoriteLongClick = {
-            myViewModel.insertInDB(it)
-            Toast.makeText(this, R.string.toast_favorite, Toast.LENGTH_SHORT).show()
+            if (it.favorite != IS_ONE){
+                Toast.makeText(this, R.string.toast_favorite, Toast.LENGTH_SHORT).show()
+                myViewModel.insertInDB(it)
+            } else {
+                myViewModel.removeMovieVM(it.kinopoiskId)
+            }
         }
+    }
+
+    private fun doIfListIsEmpty() {
+        Toast.makeText(this, R.string.toast_is_empty, Toast.LENGTH_SHORT).show()
+        currentPage--
+        myViewModel.loadMoviesFromAPI(currentPage)
     }
 
     private fun launchFragment(fragment: MovieDetailFragment) {
@@ -118,5 +156,10 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.containerFragmentDetail, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 }

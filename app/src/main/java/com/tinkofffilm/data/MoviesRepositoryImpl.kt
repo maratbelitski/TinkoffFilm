@@ -37,7 +37,7 @@ class MoviesRepositoryImpl(application: Application) : ApiService, MoviesReposit
         return ApiFactory.apiService.loadPopularMovies(page)
     }
 
-    override fun loadAllMoviesFromDB(): MutableList<MovieRepo> {
+    override fun loadAllMoviesFromDB(): MutableList<MovieRepo?> {
         return dao.getAllMovies()
     }
 }

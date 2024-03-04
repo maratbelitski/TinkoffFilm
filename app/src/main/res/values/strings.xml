@@ -13,4 +13,6 @@
     <string name="tools_description">Драма</string>
     <string name="message_error">Извините! Проблема с подключением…</string>
     <string name="button_reload">обновить</string>
+    <string name="toast_is_empty">Далее список пуст</string>
+    <string name="unknow_value_movie">Не известно</string>
 </resources>

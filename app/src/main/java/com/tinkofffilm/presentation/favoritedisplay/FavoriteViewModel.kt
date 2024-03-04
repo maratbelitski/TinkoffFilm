@@ -24,8 +24,8 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     private val loadAllMoviesFromDB = LoadAllMoviesFromDBUseCase(repository)
     private val removeMovie = DeleteMovieIFromDBUseCase(repository)
 
-    private val listFavorite = MutableLiveData<MutableList<MovieRepo>>()
-    val isFavoriteLD: LiveData<MutableList<MovieRepo>>
+    private val listFavorite = MutableLiveData<MutableList<MovieRepo?>>()
+    val isFavoriteLD: LiveData<MutableList<MovieRepo?>>
         get() = listFavorite
 
 

@@ -1,15 +1,20 @@
 package com.tinkofffilm.presentation.populare
 
 import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.tinkofffilm.R
 import com.tinkofffilm.data.MoviesRepositoryImpl
 import com.tinkofffilm.data.pojo.Movie
 import com.tinkofffilm.data.pojo.MovieRepo
 import com.tinkofffilm.data.pojo.ResponseServer
+import com.tinkofffilm.domain.DeleteMovieIFromDBUseCase
 import com.tinkofffilm.domain.InsertMovieInDBUseCase
+import com.tinkofffilm.domain.LoadAllMoviesFromDBUseCase
 import com.tinkofffilm.domain.LoadPopularMoviesUseCase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -28,12 +33,13 @@ class PopularViewModel(application: Application) : AndroidViewModel(application)
     private val repository = MoviesRepositoryImpl(application)
     private val insertMovie = InsertMovieInDBUseCase(repository)
     private val loadPopularMoviesFromApi = LoadPopularMoviesUseCase(repository)
+    private val loadAllMoviesFromDB = LoadAllMoviesFromDBUseCase(repository)
+    private val removeMovie = DeleteMovieIFromDBUseCase(repository)
 
     private var currentPage = 1
 
-
-    private val allMovies = MutableLiveData<ResponseServer?>()
-    val allMoviesLD: LiveData<ResponseServer?>
+    private val allMovies = MutableLiveData<ResponseServer>()
+    val allMoviesLD: LiveData<ResponseServer>
         get() = allMovies
 
     private val progressBar = MutableLiveData(true)
@@ -44,19 +50,42 @@ class PopularViewModel(application: Application) : AndroidViewModel(application)
     val noConnectLD: LiveData<Boolean>
         get() = noConnect
 
+    private val isEmpty = MutableLiveData<Boolean>()
+    val isEmptyLD: LiveData<Boolean>
+        get() = isEmpty
+
     private val isLoad = MutableLiveData(false)
 
+    private val listFavorite = MutableLiveData<MutableList<MovieRepo?>>()
+    val isFavoriteLD: LiveData<MutableList<MovieRepo?>>
+        get() = listFavorite
 
     init {
         loadMovies(currentPage)
+        loadFavoriteMovie()
+    }
+
+    private fun loadFavoriteMovie() {
+        viewModelScope.launch(Dispatchers.IO) {
+            listFavorite.postValue(loadAllMoviesFromDB.loadAllMoviesFromDB())
+        }
     }
 
     fun insertInDB(movie: Movie) {
         viewModelScope.launch(Dispatchers.IO) {
-            val newMovie = MovieRepo()
-            if (movie.favorite == 0) {
+
+            Log.i("MyLog","Insert 2.1 - $movie + ${movie.favorite} ")
+           // if (movie.favorite != 1) {
+                val newMovie = MovieRepo()
+                Log.i("MyLog","Insert 2 - $movie")
                 insertNewMovie(newMovie, movie)
-            }
+           // }
+        }
+    }
+
+    fun removeMovieVM(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            removeMovie.deleteMovieInDB(id)
         }
     }
 
@@ -66,9 +95,9 @@ class PopularViewModel(application: Application) : AndroidViewModel(application)
     ) {
         newMovie.nameRu = movie.nameRu
         newMovie.favorite = 1
-        newMovie.genres = movie.genres?.get(0).toString()
+        newMovie.genres = movie.genres[0].toString()
         newMovie.year = movie.year
-        newMovie.countries = movie.countries?.get(0).toString()
+        newMovie.countries = movie.countries[0].toString()
         newMovie.kinopoiskId = movie.kinopoiskId
         newMovie.posterUrl = movie.posterUrl
         val temp = movie.ratingKinopoisk
@@ -77,7 +106,7 @@ class PopularViewModel(application: Application) : AndroidViewModel(application)
         } else {
             newMovie.ratingKinopoisk = temp
         }
-
+        Log.i("MyLog","Insert 3 - $newMovie")
         insertMovie.insertMovieInDB(newMovie)
     }
 
@@ -88,14 +117,17 @@ class PopularViewModel(application: Application) : AndroidViewModel(application)
             ?.doOnSubscribe {
                 progressBar
                 isLoad.value = false
+
             }
             ?.doAfterTerminate {
                 progressBar.value = false
                 isLoad.value = true
-
             }
             ?.subscribe({
                 noConnect.value = false
+
+                isEmpty.value = it.items.isEmpty()
+
                 allMovies.value = it
             }, {
                 noConnect.value = true
@@ -104,6 +136,17 @@ class PopularViewModel(application: Application) : AndroidViewModel(application)
 
         if (disposable != null) {
             compositeDisposable.add(disposable)
+        }
+    }
+
+    fun checkForFavorite(listFromAPI: List<Movie>, listFromDB: List<MovieRepo?>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            for (movieApi: Movie in listFromAPI.listIterator())
+                for (movieDb: MovieRepo? in listFromDB.listIterator()) {
+                    if (movieApi.kinopoiskId == movieDb?.kinopoiskId) {
+                        movieApi.favorite = 1
+                    }
+                }
         }
     }
 }

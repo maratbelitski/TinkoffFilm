@@ -13,5 +13,5 @@ interface MoviesRepository {
     fun insertMovieInDBUseCase(movie: MovieRepo)
     fun deleteMovieInDB(id: Int)
     fun loadPopularMovies(page: Int): Single<ResponseServer>?
-    fun loadAllMoviesFromDB(): MutableList<MovieRepo>
+    fun loadAllMoviesFromDB(): MutableList<MovieRepo?>
 }

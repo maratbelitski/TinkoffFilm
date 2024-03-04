@@ -17,4 +17,5 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val nameMovie: TextView = itemView.findViewById(R.id.tvName_movie)
     val dateMovie: TextView = itemView.findViewById(R.id.tvDate_movie)
     val genreMovie: TextView = itemView.findViewById(R.id.tvGenre)
+    val starFavorite: ImageView = itemView.findViewById(R.id.isFavorite)
 }

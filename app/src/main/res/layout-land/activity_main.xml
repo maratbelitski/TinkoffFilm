@@ -40,6 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/light_grey"
+        android:textColor="@color/black"
         android:text="@string/btn_favorite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnPopular"
@@ -51,6 +52,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/light_grey"
+        android:textColor="@color/black"
         android:text="@string/btn_populare"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline"
@@ -78,8 +80,8 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnPrev"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/light_grey"
         android:clickable="true"
@@ -89,8 +91,8 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnNext"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/light_grey"
         android:clickable="true"

@@ -15,15 +15,15 @@ data class Movie(
     var kinopoiskId: Int = 0,
 
     @SerializedName("nameRu")
-    var nameRu: String = "",
+    var nameRu: String = "Неизвестно",
 
     @Ignore
     @SerializedName("countries")
-    var countries: List<Countries>?,
+    var countries: List<Countries>,
 
     @Ignore
     @SerializedName("genres")
-    var genres: List<Genres>?,
+    var genres: List<Genres>,
 
     @SerializedName("ratingImdb")
     var ratingImdb: String = "",
@@ -32,10 +32,10 @@ data class Movie(
     var ratingKinopoisk: String = "",
 
     @SerializedName("year")
-    var year: String = "",
+    var year: String = "Неизвестно",
 
     @SerializedName("posterUrl")
-    var posterUrl: String = "",
+    var posterUrl: String = "Нет",
 
     var favorite: Int = 0
 )

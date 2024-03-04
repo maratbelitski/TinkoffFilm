@@ -8,7 +8,7 @@ import com.tinkofffilm.data.pojo.MovieRepo
  * @project TinkoffFilm
  */
 class LoadAllMoviesFromDBUseCase(private val moviesApiRepository: MoviesRepository) {
-    fun loadAllMoviesFromDB(): MutableList<MovieRepo> {
+    fun loadAllMoviesFromDB(): MutableList<MovieRepo?> {
         return moviesApiRepository.loadAllMoviesFromDB()
     }
 }
